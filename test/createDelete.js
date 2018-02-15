@@ -20,7 +20,7 @@ describe('Create, Delete', function() {
 			if(err){
 				throw new Error("Create call failed: " + err);
 			}
-			assert.equal(200, res.statusCode, "Create Status Code != 200 (" + res.statusCode + ")");
+			assert.equal(300, res.statusCode, "Create Status Code != 200 (" + res.statusCode + ")");
 			var todo = JSON.parse(res.body);
 			// Now delete the todo
 			var deletePath = path + "/" + todo.id;
