@@ -1,0 +1,67 @@
+{
+    "pipeline": {
+        "roleArn": "arn:aws:iam::740387595182:role/AWS-CodePipeline-Service",
+        "stages": [
+            {
+                "name": "Source",
+                "actions": [
+                    {
+                        "inputArtifacts": [],
+                        "name": "Source",
+                        "actionTypeId": {
+                            "category": "Source",
+                            "owner": "AWS",
+                            "version": "1",
+                            "provider": "S3"
+                        },
+                        "outputArtifacts": [
+                            {
+                                "name": "MyApp"
+                            }
+                        ],
+                        "configuration": {
+                            "S3Bucket": "fidsafe-pipeline",
+                            "PollForSourceChanges": "true",
+                            "S3ObjectKey": "todo.zip"
+                        },
+                        "runOrder": 1
+                    }
+                ]
+            },
+            {
+                "name": "Dev",
+                "actions": [
+                    {
+                        "inputArtifacts": [
+                            {
+                                "name": "MyApp"
+                            }
+                        ],
+                        "name": "CodeBuild",
+                        "actionTypeId": {
+                            "category": "Build",
+                            "owner": "AWS",
+                            "version": "1",
+                            "provider": "CodeBuild"
+                        },
+                        "outputArtifacts": [
+                            {
+                                "name": "MyAppBuild"
+                            }
+                        ],
+                        "configuration": {
+                            "ProjectName": "todoS3"
+                        },
+                        "runOrder": 1
+                    }
+                ]
+            }
+        ],
+        "artifactStore": {
+            "type": "S3",
+            "location": "codepipeline-us-east-1-569858262409"
+        },
+        "name": "serverlessToDoCICDS3_CLI1",
+        "version": 1
+    }
+}
